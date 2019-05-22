@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E1F1207B-168D-4919-8618-AE4BEBC30A9D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FuzzySharp35</RootNamespace>
+    <AssemblyName>FuzzySharp35</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Threading, Version=1.0.2856.102, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\TaskParallelLibrary.1.0.2856.0\lib\Net35\System.Threading.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Edits\EditOp.cs" />
+    <Compile Include="Edits\MatchingBlock.cs" />
+    <Compile Include="Edits\OpCode.cs" />
+    <Compile Include="Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Extractor\ExtractedResult.cs" />
+    <Compile Include="Extractor\ResultExtractor.cs" />
+    <Compile Include="Fuzz.cs" />
+    <Compile Include="Levenshtein.cs" />
+    <Compile Include="PreProcess\PreprocessMode.cs" />
+    <Compile Include="PreProcess\StringPreprocessorFactory.cs" />
+    <Compile Include="Process.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SimilarityRatio\ScorerCache.cs" />
+    <Compile Include="SimilarityRatio\Scorer\Composite\WeightedRatioScorer.cs" />
+    <Compile Include="SimilarityRatio\Scorer\Generic\IRatioScorer.cs" />
+    <Compile Include="SimilarityRatio\Scorer\Generic\ScorerBase.cs" />
+    <Compile Include="SimilarityRatio\Scorer\IRatioScorer.cs" />
+    <Compile Include="SimilarityRatio\Scorer\ScorerBase.cs" />
+    <Compile Include="SimilarityRatio\Scorer\StrategySensitive\Generic\StrategySensitiveScorerBase.cs" />
+    <Compile Include="SimilarityRatio\Scorer\StrategySensitive\Simple\DefaultRatioScorer.cs" />
+    <Compile Include="SimilarityRatio\Scorer\StrategySensitive\Simple\PartialRatioScorer.cs" />
+    <Compile Include="SimilarityRatio\Scorer\StrategySensitive\Simple\SimpleRatioScorerBase.cs" />
+    <Compile Include="SimilarityRatio\Scorer\StrategySensitive\StrategySensitiveScorerBase.cs" />
+    <Compile Include="SimilarityRatio\Scorer\StrategySensitive\TokenAbbreviation\PartialTokenAbbreviationScorer.cs" />
+    <Compile Include="SimilarityRatio\Scorer\StrategySensitive\TokenAbbreviation\TokenAbbreviationScorer.cs" />
+    <Compile Include="SimilarityRatio\Scorer\StrategySensitive\TokenAbbreviation\TokenAbbreviationScorerBase.cs" />
+    <Compile Include="SimilarityRatio\Scorer\StrategySensitive\TokenDifference\PartialTokenDifferenceScorer.cs" />
+    <Compile Include="SimilarityRatio\Scorer\StrategySensitive\TokenDifference\TokenDifferenceScorer.cs" />
+    <Compile Include="SimilarityRatio\Scorer\StrategySensitive\TokenDifference\TokenDifferenceScorerBase.cs" />
+    <Compile Include="SimilarityRatio\Scorer\StrategySensitive\TokenInitialism\PartialTokenInitialismScorer.cs" />
+    <Compile Include="SimilarityRatio\Scorer\StrategySensitive\TokenInitialism\TokenInitialismScorer.cs" />
+    <Compile Include="SimilarityRatio\Scorer\StrategySensitive\TokenInitialism\TokenInitialismScorerBase.cs" />
+    <Compile Include="SimilarityRatio\Scorer\StrategySensitive\TokenSet\PartialTokenSetScorer.cs" />
+    <Compile Include="SimilarityRatio\Scorer\StrategySensitive\TokenSet\TokenSetScorer.cs" />
+    <Compile Include="SimilarityRatio\Scorer\StrategySensitive\TokenSet\TokenSetScorerBase.cs" />
+    <Compile Include="SimilarityRatio\Scorer\StrategySensitive\TokenSort\PartialTokenSortScorer.cs" />
+    <Compile Include="SimilarityRatio\Scorer\StrategySensitive\TokenSort\TokenSortAlgorithm.cs" />
+    <Compile Include="SimilarityRatio\Scorer\StrategySensitive\TokenSort\TokenSortScorer.cs" />
+    <Compile Include="SimilarityRatio\Strategy\DefaultRatioStrategy.cs" />
+    <Compile Include="SimilarityRatio\Strategy\Generic\DefaultRatioStrategyT.cs" />
+    <Compile Include="SimilarityRatio\Strategy\Generic\PartialRatioStrategyT.cs" />
+    <Compile Include="SimilarityRatio\Strategy\PartialRatioStrategy.cs" />
+    <Compile Include="Utils\Heap.cs" />
+    <Compile Include="Utils\Permutation.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="StringUtils\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
