@@ -1,4 +1,6 @@
-﻿namespace FuzzySharp.Edits
+﻿using System;
+
+namespace FuzzySharp.Edits
 {
     public enum EditType
     {
@@ -17,7 +19,7 @@
 
         public override string ToString()
         {
-            return $"{EditType}({SourcePos}, {DestPos})";
+            return string.Format("{0}({1}, {2})", EditType, SourcePos, DestPos);
         }
     }
 }

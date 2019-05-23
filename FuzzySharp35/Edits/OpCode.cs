@@ -1,4 +1,6 @@
-﻿namespace FuzzySharp.Edits
+﻿using System;
+
+namespace FuzzySharp.Edits
 {
     public class OpCode
     {
@@ -10,7 +12,7 @@
 
         public override string ToString()
         {
-            return $"{EditType}({SourceBegin},{SourceEnd},{DestBegin},{DestEnd})";
+            return string.Format("{0}({1},{2},{3},{4})", EditType, SourceBegin, SourceEnd, DestBegin, DestEnd);
         }
     }
 }

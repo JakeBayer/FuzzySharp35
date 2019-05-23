@@ -667,12 +667,12 @@ namespace FuzzySharp
         }
 
         // Special Case
-        public static int EditDistance(string s1, string s2, int xcost = 0)
+        public static int EditDistance(string s1, string s2, int xcost)
         {
             return EditDistance(s1.ToCharArray(), s2.ToCharArray(), xcost);
         }
 
-        public static int EditDistance<T>(T[] c1, T[] c2, int xcost = 0) where T:  IEquatable<T>
+        public static int EditDistance<T>(T[] c1, T[] c2, int xcost) where T:  IEquatable<T>
         {
 
             int i;

@@ -32,9 +32,9 @@ namespace FuzzySharp.Extractor
         {
             if (typeof(T) == typeof(string))
             {
-                return $"(string: {Value}, score: {Score}, index: {Index})";
+                return string.Format("(string: {0}, score: {1}, index: {2})", Value, Score, Index);
             }
-            return $"(value: {Value.ToString()}, score: {Score}, index: {Index})";
+            return string.Format("(value: {0}, score: {1}, index: {2})", Value.ToString(), Score, Index);
         }
     }
 }

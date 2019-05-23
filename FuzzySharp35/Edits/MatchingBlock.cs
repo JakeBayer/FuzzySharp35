@@ -1,4 +1,6 @@
-﻿namespace FuzzySharp.Edits
+﻿using System;
+
+namespace FuzzySharp.Edits
 {
     public class MatchingBlock
     {
@@ -8,7 +10,7 @@
 
         public override string ToString()
         {
-            return $"({SourcePos},{DestPos},{Length})";
+            return string.Format("({0},{1},{2})", SourcePos, DestPos, Length);
         }
     }
 }

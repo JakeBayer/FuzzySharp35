@@ -16,7 +16,7 @@ namespace FuzzySharp.Extractor
             }
         }
 
-        public static IEnumerable<ExtractedResult<T>> ExtractWithoutOrder<T>(T query, IEnumerable<T> choices, Func<T,string> processor, IRatioScorer scorer, int cutoff = 0)
+        public static IEnumerable<ExtractedResult<T>> ExtractWithoutOrder<T>(T query, IEnumerable<T> choices, Func<T,string> processor, IRatioScorer scorer, int cutoff)
         {
             int index = 0;
             var processedQuery = processor(query);
@@ -31,17 +31,17 @@ namespace FuzzySharp.Extractor
             }
         }
 
-        public static ExtractedResult<T> ExtractOne<T>(T query, IEnumerable<T> choices, Func<T, string> processor, IRatioScorer calculator, int cutoff = 0)
+        public static ExtractedResult<T> ExtractOne<T>(T query, IEnumerable<T> choices, Func<T, string> processor, IRatioScorer calculator, int cutoff)
         {
             return ExtractWithoutOrder(query, choices, processor, calculator, cutoff).Max();
         }
 
-        public static IEnumerable<ExtractedResult<T>> ExtractSorted<T>(T query, IEnumerable<T> choices, Func<T, string> processor, IRatioScorer calculator, int cutoff = 0)
+        public static IEnumerable<ExtractedResult<T>> ExtractSorted<T>(T query, IEnumerable<T> choices, Func<T, string> processor, IRatioScorer calculator, int cutoff)
         {
             return ExtractWithoutOrder(query, choices, processor, calculator, cutoff).OrderByDescending(r => r.Score);
         }
 
-        public static IEnumerable<ExtractedResult<T>> ExtractTop<T>(T query, IEnumerable<T> choices, Func<T, string> processor, IRatioScorer calculator, int limit, int cutoff = 0)
+        public static IEnumerable<ExtractedResult<T>> ExtractTop<T>(T query, IEnumerable<T> choices, Func<T, string> processor, IRatioScorer calculator, int limit, int cutoff)
         {
             return ExtractWithoutOrder(query, choices, processor, calculator, cutoff).MaxN(limit, new ResultComparer<T>()).Reverse();
         }

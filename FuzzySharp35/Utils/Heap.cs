@@ -15,11 +15,23 @@ namespace FuzzySharp.Utils
         private T[] _heap     = new T[InitialCapacity];
         private int _tail     = 0;
 
-        public int Count => _tail;
+        public int Count
+        {
+            get { return _tail; }
+        }
 
-        public int Capacity => _capacity;
+        public int Capacity
+        {
+            get { return _capacity; }
+        }
 
-        protected          Comparer<T> Comparer { get; }
+        private readonly Comparer<T> comparer;
+
+        protected Comparer<T> GetComparer()
+        {
+            return comparer;
+        }
+
         protected abstract bool        Dominates(T x, T y);
 
         protected Heap() : this(Comparer<T>.Default)
@@ -37,9 +49,11 @@ namespace FuzzySharp.Utils
 
         protected Heap(IEnumerable<T> collection, Comparer<T> comparer)
         {
-            if (collection == null) throw new ArgumentNullException(nameof(collection));
+            if (collection == null) throw new ArgumentNullException("collection");
 
-            Comparer = comparer ?? throw new ArgumentNullException(nameof(comparer));
+            if (comparer == null) throw new ArgumentNullException("comparer");
+
+            this.comparer = comparer;
 
             foreach (var item in collection)
             {
@@ -182,7 +196,7 @@ namespace FuzzySharp.Utils
 
         protected override bool Dominates(T x, T y)
         {
-            return Comparer.Compare(x, y) >= 0;
+            return GetComparer().Compare(x, y) >= 0;
         }
     }
 
@@ -209,7 +223,7 @@ namespace FuzzySharp.Utils
 
         protected override bool Dominates(T x, T y)
         {
-            return Comparer.Compare(x, y) <= 0;
+            return GetComparer().Compare(x, y) <= 0;
         }
     }
 }

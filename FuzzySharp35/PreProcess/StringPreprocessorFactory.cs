@@ -3,11 +3,11 @@ using System.Text.RegularExpressions;
 
 namespace FuzzySharp.PreProcess
 {
-    internal class StringPreprocessorFactory
+    public class StringPreprocessorFactory
     {
         private static string pattern = "[^ a-zA-Z0-9]";
 
-        private static string Default(string input)
+        public static string Default(string input)
         {
             input = Regex.Replace(input, pattern, " ");
             input = input.ToLower();
@@ -24,7 +24,7 @@ namespace FuzzySharp.PreProcess
                 case PreprocessMode.None:
                     return s => s;
                 default:
-                    throw new InvalidOperationException($"Invalid string preprocessor mode: {mode}");
+                    throw new InvalidOperationException(string.Format("Invalid string preprocessor mode: {0}", mode));
             }
         }
     }

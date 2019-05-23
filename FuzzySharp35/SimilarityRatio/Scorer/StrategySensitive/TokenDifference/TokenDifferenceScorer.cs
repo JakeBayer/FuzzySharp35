@@ -5,6 +5,9 @@ namespace FuzzySharp.SimilarityRatio.Scorer.StrategySensitive
 {
     public class TokenDifferenceScorer : TokenDifferenceScorerBase
     {
-        protected override Func<string[], string[], int> Scorer => DefaultRatioStrategy<string>.Calculate;
+        protected override Func<string[], string[], int> Scorer
+        {
+            get { return DefaultRatioStrategy<string>.Calculate; }
+        }
     }
 }

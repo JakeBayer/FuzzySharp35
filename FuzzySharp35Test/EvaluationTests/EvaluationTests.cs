@@ -41,12 +41,11 @@ namespace FuzzySharp.Test.EvaluationTests
 
 
             var h1 = Process.ExtractOne("cowboys", new[] { "Atlanta Falcons", "New York Jets", "New York Giants", "Dallas Cowboys" });
-            var h2 = string.Join(", ", Process.ExtractTop("goolge", new[] { "google", "bing", "facebook", "linkedin", "twitter", "googleplus", "bingnews", "plexoogl" }, limit: 3));
+            var h2 = string.Join(", ", Process.ExtractTop("goolge", new[] { "google", "bing", "facebook", "linkedin", "twitter", "googleplus", "bingnews", "plexoogl" }, 3));
             var h3 = string.Join(", ", Process.ExtractAll("goolge", new [] {"google", "bing", "facebook", "linkedin", "twitter", "googleplus", "bingnews", "plexoogl" }));
-            var h4 = string.Join(", ", Process.ExtractAll("goolge", new[] { "google", "bing", "facebook", "linkedin", "twitter", "googleplus", "bingnews", "plexoogl" }, cutoff: 40));
             var h5 = string.Join(", ", Process.ExtractSorted("goolge", new [] {"google", "bing", "facebook", "linkedin", "twitter", "googleplus", "bingnews", "plexoogl" }));
 
-            var i1 = Process.ExtractOne("cowboys", new[] { "Atlanta Falcons", "New York Jets", "New York Giants", "Dallas Cowboys" }, s => s, ScorerCache.Get<DefaultRatioScorer>());
+            var i1 = Process.ExtractOne("cowboys", new[] { "Atlanta Falcons", "New York Jets", "New York Giants", "Dallas Cowboys" }, StringPreprocessorFactory.Default, ScorerCache.Get<DefaultRatioScorer>(), 0);
 
             var events = new[]
             {
@@ -56,7 +55,7 @@ namespace FuzzySharp.Test.EvaluationTests
             };
             var query = new[] { "new york mets vs chicago cubs", "CitiField", "2017-03-19", "8pm" };
 
-            var best = Process.ExtractOne(query, events, strings => strings[0]);
+            var best = Process.ExtractOne(query, events, SelectFirst, ScorerCache.Get<WeightedRatioScorer>(), 0);
 
             var ratio = ScorerCache.Get<DefaultRatioScorer>();
             var partial = ScorerCache.Get<PartialRatioScorer>();
@@ -67,6 +66,11 @@ namespace FuzzySharp.Test.EvaluationTests
             var tokenAbbreviation = ScorerCache.Get<TokenAbbreviationScorer>();
             var partialTokenAbbreviation = ScorerCache.Get<PartialTokenAbbreviationScorer>();
             var weighted = ScorerCache.Get<WeightedRatioScorer>();
+        }
+
+        private string SelectFirst(string[] strings)
+        {
+            return strings[0];
         }
     }
 }

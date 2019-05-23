@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using FuzzySharp.PreProcess;
 using FuzzySharp.SimilarityRatio;
+using FuzzySharp.SimilarityRatio.Scorer.Composite;
 using FuzzySharp.SimilarityRatio.Scorer.StrategySensitive;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -18,6 +20,11 @@ namespace FuzzySharp.Test.FuzzyTests
         private string   _s6;
         private string[] _cirqueStrings;
         private string[] _baseballStrings;
+
+        private string SelectFirst(string[] strings)
+        {
+            return strings[0];
+        }
 
         [TestInitialize]
         public void Setup()
@@ -95,7 +102,7 @@ namespace FuzzySharp.Test.FuzzyTests
             };
             var query = new[] { "new york mets vs chicago cubs", "CitiField", "2017-03-19", "8pm" };
 
-            var best = Process.ExtractOne(query, events, strings => strings[0]);
+            var best = Process.ExtractOne(query, events, SelectFirst, ScorerCache.Get<WeightedRatioScorer>(), 0);
             Assert.AreEqual(best.Value, events[0]);
         }
 
@@ -110,13 +117,11 @@ namespace FuzzySharp.Test.FuzzyTests
                 "new york yankees vs boston red sox"
             };
 
-            var choicesDict = new Dictionary<int, string>
-            {
-                [1] = "new york mets vs chicago cubs",
-                [2] = "chicago cubs vs chicago white sox",
-                [3] = "philladelphia phillies vs atlanta braves",
-                [4] = "braves vs mets"
-            };
+            var choicesDict = new Dictionary<int, string>();
+            choicesDict[4] = "braves vs mets";
+            choicesDict[3] = "philladelphia phillies vs atlanta braves";
+            choicesDict[2] = "chicago cubs vs chicago white sox";
+            choicesDict[1] = "new york mets vs chicago cubs";
 
             // in this hypothetical example we care about ordering, so we use quick ratio
             var query = "new york mets at chicago cubs";
@@ -129,7 +134,7 @@ namespace FuzzySharp.Test.FuzzyTests
 
             // now, use the custom scorer
 
-            best = Process.ExtractOne(query, choices, null, ScorerCache.Get<DefaultRatioScorer>());
+            best = Process.ExtractOne(query, choices, StringPreprocessorFactory.Default, ScorerCache.Get<DefaultRatioScorer>(), 0);
             Assert.AreEqual(best.Value, choices[0]);
 
             best = Process.ExtractOne(query, choicesDict.Select(k => k.Value));
@@ -153,7 +158,7 @@ namespace FuzzySharp.Test.FuzzyTests
             // in this situation, this is an event that does not exist in the list
             // we don't want to randomly match to something, so we use a reasonable cutoff
 
-            var best = Process.ExtractSorted(query, choices, cutoff: 50);
+            var best = Process.ExtractSorted(query, choices, StringPreprocessorFactory.Default, ScorerCache.Get<WeightedRatioScorer>(), 50);
             Assert.IsTrue(!best.Any());
             // .assertIsNone(best) // unittest.TestCase did not have assertIsNone until Python 2.7
 
@@ -177,7 +182,7 @@ namespace FuzzySharp.Test.FuzzyTests
 
             var query = "new york mets vs chicago cubs";
             // Only find 100-score cases
-            var res = Process.ExtractSorted(query, choices, cutoff: 100);
+            var res = Process.ExtractSorted(query, choices, StringPreprocessorFactory.Default, ScorerCache.Get<WeightedRatioScorer>(), 100);
             Assert.IsTrue(res.Any());
             var bestMatch = res.First();
             Assert.IsTrue(bestMatch.Value == choices[0]);
